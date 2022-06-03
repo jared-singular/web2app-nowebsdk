@@ -1,0 +1,197 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+  <div style="background-color: lightblue; padding: 20px">
+    <h1>Manual Bridge Page Example</h1>
+    <h3>Concept</h3>
+    <ol>
+      <li>Existing App User sends an invite link to a friend. This invite is URL must be built in the App and Shortened for compatibility with SMS, etc...</li>
+      <li>The Invitee receives the link, and when clicked it resolves to a bridge page on your owned website, where Javascript code parses any Singular supported parameter and forwards them to a defined platform agnostic Singular Custom Source Tracking Link which is then applied to the CTA buttons. See example below.</li>
+    </ol>
+    <h3>The following parameters are supported in this example.</h3>
+    <ul>
+      <li>_smtype = Source Media Type - <a href="https://support.singular.net/hc/en-us/articles/360047706852#Is_probabilistic_matching_going_away_What_attribution_methods_are_supported_with_iOS_14">learn more</a></li>
+      <li>pcn = Campaign Name</li>
+      <li>pcid = Campaign ID</li>
+      <li>pscn = Sub Campaign Name</li>
+      <li>pscid = Sub Campaign ID</li>
+      <li>pcrn = Creative Name</li>
+      <li>pcrid = Creative ID</li>
+      <li>pshid = Publisher ID</li>
+      <li>psn = Partner Site Name</li>
+      <li>psid = Partner Site ID</li>
+      <li>kw = Keyword</li>
+      <li>paffn = Affiliate Name</li>
+      <li>paffid = Affiliate ID</li>
+    </ul>
+    <h4>Other helpful parameters:</h4>
+    <ul>
+      <li>pssn = Sub Publisher Name (Export Logs)</li>
+      <li>pssid = Sub Publisher ID (Export Logs)</li>
+      <li>aifa = The Android Advertising ID of the user's device, a.k.a. GAID (Export Logs)</li>
+      <li>idfa = The iOS Advertising ID of the device (unhashed/raw) (Export Logs)</li>
+      <li>cl = Click ID (Export Logs)</li>
+      <li>_p = Passthrough Parameter</li>
+    </ul>
+    <p>Javascript code on this page controls the parsing and reassignment of the parameters to the defined Singular Custom Source Tracking Link (the baselink). Additional details on what parameters are available maybe be found in our Help Center Article <a href="https://support.singular.net/hc/en-us/articles/360018879491-Tracking-Link-Parameters">HERE</a><p> 
+    <strong><em>This use-case and code sample is provide as an example only and is not supported by Singular Support. Contact your CSM or Solution Engineer with questions.</em></strong>
+    
+    <div id='details' style="padding:5px; background-color: lightyellow; overflow-wrap: inherit;">
+      <h3>Javascript generated Singular Tracking Link applied to the Buttons:</h3>
+      <p>Update the parameter values in the URL bar and see how the values change on this link.</p>
+      <script type="text/javascript"></script>
+    </div>
+  </div>
+  <div style="padding: 20px">
+    <h2>Choose your App Store</h2>
+    
+    <div id='buttons'>
+      <button id='aos' style="width: 100px">aOS</button>
+      <button id='ios' style="width: 100px">iOS</button>
+    </div>
+  </div>
+
+  <script>
+    // Singular Tracking Link Settings
+    var auto = 'false';
+    var baselink = 'https://singularassist.sng.link/A59c0/n6jh';
+    var deeplink = 'singularassist://Deep_Link';
+    var deferred_deeplink = 'singularassist://DDL_Link';
+    var fallback_url = 'https://www.singular.net';
+    var aos_link = 'https://play.google.com/store/apps/details?id=net.singular.deviceassist&hl=en_US&gl=US';
+    var ios_link = 'https://apps.apple.com/us/app/singular-device-assist/id1441750662';
+    
+    if (baselink) {
+      var current_url = new URL(document.URL);
+      var urlParams = new URLSearchParams(current_url.search);
+      var newParams = new URLSearchParams();
+      var singular_link = '';
+      
+      // Link Properties
+      if (deeplink) {
+        newParams.append('_dl',deeplink);  
+      }
+      if (deferred_deeplink) {
+        newParams.append('_ddl',deferred_deeplink);  
+      }
+      if (fallback_url) {
+        newParams.append('_fallback_redirect',fallback_url);  
+      }
+      if (urlParams.has('_p')){
+        newParams.append('_p',urlParams.get('_p'));
+      }
+            
+      //Campaign Properties
+      if (urlParams.has('_smtype')){
+        newParams.append('_smtype',urlParams.get('_smtype'));
+      }
+      if (urlParams.has('pcn')){
+        newParams.append('pcn',urlParams.get('pcn'));
+      }
+      if (urlParams.has('pcid')){
+        newParams.append('pcid',urlParams.get('pcid'));
+      }
+      if (urlParams.has('pscn')){
+        newParams.append('pscn',urlParams.get('pscn'));
+      }
+      if (urlParams.has('pscid')){
+        newParams.append('pscid',urlParams.get('pscid'));
+      }
+      if (urlParams.has('pcrn')){
+        newParams.append('pcrn',urlParams.get('pcrn'));
+      }
+      if (urlParams.has('pcrid')){
+        newParams.append('pcrid',urlParams.get('pcrid'));
+      }
+      if (urlParams.has('pshid')){
+        newParams.append('pshid',urlParams.get('pshid'));
+      }
+      if (urlParams.has('psn')){
+        newParams.append('psn',urlParams.get('psn'));
+      }
+      if (urlParams.has('psid')){
+        newParams.append('psid',urlParams.get('psid'));
+      }
+      if (urlParams.has('pssn')){
+        newParams.append('pssn',urlParams.get('pssn'));
+      }
+      if (urlParams.has('pssid')){
+        newParams.append('pssid',urlParams.get('pssid'));
+      }
+      if (urlParams.has('kw')){
+        newParams.append('kw',urlParams.get('kw'));
+      }
+      if (urlParams.has('paffn')){
+        newParams.append('paffn',urlParams.get('paffn'));
+      }
+      if (urlParams.has('paffid')){
+        newParams.append('paffid',urlParams.get('paffid'));
+      }
+      if (urlParams.has('aifa')){
+        newParams.append('aifa',urlParams.get('aifa'));
+      }
+      if (urlParams.has('idfa')){
+        newParams.append('idfa',urlParams.get('idfa'));
+      }
+      if (urlParams.has('cl')){
+        newParams.append('cl',urlParams.get('cl'));
+      }
+      if (urlParams.has('auto')){
+        auto = urlParams.get('auto');
+      }
+      
+      // Set Singular Tracking Link
+      singular_link = baselink+'?'+newParams.toString()+'&_forward_params=1';
+      aos_link = singular_link;
+      ios_link = singular_link;
+    }
+    
+    const para = document.createElement("p");
+    const node = document.createTextNode(singular_link);
+    para.appendChild(node);
+
+    const element = document.getElementById("details");
+    element.appendChild(para);
+
+    document.getElementById("aos").addEventListener("click", function(){ 
+      window.open(aos_link,'_blank');
+    });
+    document.getElementById("ios").addEventListener("click", function(){ 
+      window.open(ios_link,'_blank');
+    });
+    if (auto === 'true') {
+      // Appending _force_redirect=1 to assist with iOS redirect compatibility and force the app scheme to open the deeplink.
+      window.location.replace(singular_link+'&_force_redirect=1');
+    }
+    
+
+  </script>
+  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
